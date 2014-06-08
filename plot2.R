@@ -1,0 +1,10 @@
+rawfile <- file("household_power_consumption.txt", "r")
+cat(grep("(^Date)|(^[1|2]/2/2007)",readLines(rawfile), value=TRUE), sep="\n", file="filtered.txt")
+close(rawfile)
+filtered_data<-read.csv2("filtered.txt")
+global1 <- as.numeric(as.character(filtered_data$Global_active_power))
+datetime<-strptime(paste(filtered_data$Date,filtered_data$Time), format= "%d/%m/%Y %H:%M:%S")
+plot(datetime,global1, type='l',xlab="",ylab="Global Active Power (Kilowatts)")
+dev.copy(png,file="plot2.png")
+dev.off()
+
